@@ -1,4 +1,4 @@
-import java.util.Scanner:
+import java.util.Scanner;
 
 
 
@@ -9,16 +9,22 @@ public class FindFirstMatch
        Scanner in = new Scanner(System.in);
        System.out.println("Enter a string");
        String str = in.nextLine();
-       index = 0;
-       ch = 'a';
-       while(ch!=' ' and index<str.length)
+       int index = -1;
+       char ch = 'a';
+       while(ch!=' ' && index<str.length())
        {
+           index++;
            ch = str.charAt(index);
-           index++
-        
+       }
+       if (ch == ' ')
+       {
+           System.out.println("index at: " +index);
        }
        
-       
+       else
+       {
+           System.out.println("not found");
+       }
    }
 
 }
