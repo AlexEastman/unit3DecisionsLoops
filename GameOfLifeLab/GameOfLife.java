@@ -18,13 +18,12 @@ public class GameOfLife
     private ActorWorld world;
     
     // the game board will have 5 rows and 5 columns
-    private final int ROWS = 5;
-    private final int COLS = 5;
+    private final int ROWS = 100;
+    private final int COLS = 100;
+    
     
     // constants for the location of the three cells initially alive
-    private final int X1 = 0, Y1 = 2;
-    private final int X2 = 2, Y2 = 0;
-    private final int X3 = 2, Y3 = 1;
+    
 
     /**
      * Default constructor for objects of class GameOfLife
@@ -63,15 +62,15 @@ public class GameOfLife
         
         // create and add rocks (a type of Actor) to the three intial locations
         Rock rock1 = new Rock();
-        Location loc1 = new Location(X1, Y1);
+        Location loc1 = new Location(1, 1);
         grid.put(loc1, rock1);
         
         Rock rock2 = new Rock();
-        Location loc2 = new Location(X2, Y2);
+        Location loc2 = new Location(3, 3);
         grid.put(loc2, rock2);
         
         Rock rock3 = new Rock();
-        Location loc3 = new Location(X3, Y3);
+        Location loc3 = new Location(6, 6);
         grid.put(loc3, rock3);
     }
 
@@ -110,6 +109,23 @@ public class GameOfLife
         Actor actor = world.getGrid().get(loc);
         return actor;
     }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *  that describes the operation of the method
+     *
+     * @pre     preconditions for the method
+     *          (what the method assumes about the method's parameters and class's state)
+     * @post    postconditions for the method
+     *          (what the method guarantees upon completion)
+     * @param   y   description of parameter y
+     * @return  description of the return value
+     */
+    public int numNeighbors(Location coord)
+    {
+        
+    }
+
 
     /**
      * Returns the number of rows in the game board
