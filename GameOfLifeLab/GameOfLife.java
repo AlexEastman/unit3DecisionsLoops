@@ -90,32 +90,37 @@ public class GameOfLife
          */
         
         // create the grid, of the specified size, that contains Actors
-        
         Grid<Actor> grid = world.getGrid();
-        ArrayList occupied = new ArrayList(25);
-        ArrayList neighbors = new ArrayList(25);
-        ArrayList allNeighbors = new ArrayList(25);
-        ArrayList testSquares = new ArrayList(25);
-        Location testLocation = new Location(0,0);
-        testSquares = grid.getOccupiedLocations();
-        occupied = grid.getOccupiedLocations();
         
-        for(int k = 0;k<occupied.length();k++)
+        
+        ArrayList<Location> occupied = new ArrayList(25); //initialize andset the size to 25
+        ArrayList<Location> neighbors = new ArrayList(25); //initialize and set the size to 25
+        ArrayList<Location> allNeighbors = new ArrayList(25); //initialize and set the size to 25
+        ArrayList<Location> testSquares = new ArrayList(25); //initialize and set the size to 25
+        Location testLocation = new Location(0,0); // initialize location for use in loop
+        
+        occupied = grid.getOccupiedLocations(); // contains all locations where a live cell is present
+        testSquares = grid.getOccupiedLocations(); // live cells are valid test locations along with their neighbors (which is found later)
+        
+        for(int k = 0;k<occupied.size();k++)
         {
-            neighbors = getValidAdjacentLocations(occupied.get(k));
-            for(int i = 0;i<neighbors.length();i++)
+            neighbors = grid.getValidAdjacentLocations(occupied.get(k)); // contains all locations ajacent to a location
+            for(int i = 0;i<neighbors.size();i++)
             {
-                testLocation = neighbors.get(i);
+                testLocation = neighbors.get(i); // sets up for iteration through ajacent locations to the test location
                 
-                if(occupied.indexOf(testLocation) == -1)//if the location is not in occupied add it to the neighbors
+                if(testSquares.indexOf(testLocation) == -1 || )//if the location is not in occupied add it to the neighbors and test squares
                 {
-                    allNeighbors.add(testLocation);
-                    testSquares.add(testLocation);
+                    allNeighbors.add(testLocation); // this list contains all the neighbors of occupied locations but not the actual locations these cells need exactly 3 neighbors to be alive
+                    testSquares.add(testLocation); // this list already contains all occupied locations and the only other valid test locations are their neighbors which are added here
                 }
             }
+        }                                                                                                                                                    
+        ArrayList<Location> newOccupied = new ArrayList(25); // this is a list of all locations that should be occupied next generation
+        for(int j = 0; j<testSquares.size(); j++) // iterate through the valid test locations as they are the only ones that could be occupied next round, this optimization has a much greater effect the larger a grid becomes
+        {
+            
         }
-        ArrayList newOccupied = new ArrayList(25);
-        
         
         
     }
