@@ -98,13 +98,22 @@ public class GameOfLife
         ArrayList<Location> allNeighbors = new ArrayList(25); //initialize and set the size to 25
         ArrayList<Location> testSquares = new ArrayList(25); //initialize and set the size to 25
         Location testLocation = new Location(0,0); // initialize location for use in loop
-        
+        ArrayList<Location> newOccupied = new ArrayList(25); // this is a list of all locations that should be occupied next generation
+         
         occupied = grid.getOccupiedLocations(); // contains all locations where a live cell is present
         testSquares = grid.getOccupiedLocations(); // live cells are valid test locations along with their neighbors (which is found later)
+        
         
         for(int k = 0;k<occupied.size();k++)
         {
             neighbors = grid.getValidAdjacentLocations(occupied.get(k)); // contains all locations ajacent to a location
+            
+            if (neighbors.size() == 2 || neighbors.size() == 3)
+            {
+                newOccupiedLocations.add(occupied.get(k));
+            }
+            
+            // this loop structure finds an array of only the neighbors of occupied cell not including the occupied cell
             for(int i = 0;i<neighbors.size();i++)
             {
                 testLocation = neighbors.get(i); // sets up for iteration through ajacent locations to the test location
@@ -116,8 +125,17 @@ public class GameOfLife
                 }
             }
         }                                                                                                                                                    
-        ArrayList<Location> newOccupied = new ArrayList(25); // this is a list of all locations that should be occupied next generation
-        for(int j = 0; j<testSquares.size(); j++) // iterate through the valid test locations as they are the only ones that could be occupied next round, this optimization has a much greater effect the larger a grid becomes
+        
+        // iterates through the valid test locations as they are the only ones that could be occupied next round, this optimization has a much greater effect the larger a grid becomes
+       
+        for(int i = 0; i<allNeighbors.size;i++)
+        {
+            
+        }
+        
+        
+        
+        for(int j = 0; j<testSquares.size(); j++) 
         {
             
         }
