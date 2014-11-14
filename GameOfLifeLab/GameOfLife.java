@@ -18,12 +18,11 @@ public class GameOfLife
     // the world comprised of the grid that displays the graphics for the game
     private ActorWorld world;
     
-    // the game board will have 5 rows and 5 columns
-    private final int ROWS = 5;
-    private final int COLS = 5;
+    // the game board will have 100 rows and 100 columns
+    private final int ROWS = 100;
+    private final int COLS = 100;
     
-    
-    // constants for the location of the three cells initially alive
+
     
 
     /**
@@ -44,7 +43,13 @@ public class GameOfLife
         populateGame();
         
         // display the newly constructed and populated world
-        world.show();
+        while(true)
+        {
+            createNextGeneration();
+            world.show();
+        }
+        
+        
         
     }
     
@@ -93,12 +98,12 @@ public class GameOfLife
         Grid<Actor> grid = world.getGrid();
         
         
-        ArrayList<Location> occupied = new ArrayList(25); //initialize andset the size to 25
-        ArrayList<Location> neighbors = new ArrayList(25); //initialize and set the size to 25
-        ArrayList<Location> allNeighbors = new ArrayList(25); //initialize and set the size to 25
-        ArrayList<Location> testSquares = new ArrayList(25); //initialize and set the size to 25
+        ArrayList<Location> occupied = new ArrayList(10000); //initialize and set the size to 10000
+        ArrayList<Location> neighbors = new ArrayList(10000); //initialize and set the size to 10000
+        ArrayList<Location> allNeighbors = new ArrayList(10000); //initialize and set the size to 10000
+        ArrayList<Location> testSquares = new ArrayList(10000); //initialize and set the size to 10000
         Location testLocation = new Location(0,0); // initialize location for use in loop
-        ArrayList<Location> newOccupied = new ArrayList(25); // this is a list of all locations that should be occupied next generation
+        ArrayList<Location> newOccupied = new ArrayList(10000); // this is a list of all locations that should be occupied next generation
          
         occupied = grid.getOccupiedLocations(); // contains all locations where a live cell is present
         testSquares = grid.getOccupiedLocations(); // live cells are valid test locations along with their neighbors (which is found later)
@@ -108,9 +113,9 @@ public class GameOfLife
         {
             neighbors = grid.getValidAdjacentLocations(occupied.get(k)); // contains all locations ajacent to a location
             
-            if (neighbors.size() == 2 || neighbors.size() == 3)
+            if (neighbors.size() == 2 || neighbors.size() == 3) // 
             {
-                newOccupiedLocations.add(occupied.get(k));
+                newOccupied.add(occupied.get(k)); // if the currently occupied location has 2 or 3 neighbors it will remain alive
             }
             
             // this loop structure finds an array of only the neighbors of occupied cell not including the occupied cell
@@ -118,26 +123,32 @@ public class GameOfLife
             {
                 testLocation = neighbors.get(i); // sets up for iteration through ajacent locations to the test location
                 
-                if(testSquares.indexOf(testLocation) == -1 || )//if the location is not in occupied add it to the neighbors and test squares
+                if(testSquares.indexOf(testLocation) == -1)//if the location is not in occupied add it to the neighbors and test squares
                 {
                     allNeighbors.add(testLocation); // this list contains all the neighbors of occupied locations but not the actual locations these cells need exactly 3 neighbors to be alive
                     testSquares.add(testLocation); // this list already contains all occupied locations and the only other valid test locations are their neighbors which are added here
+                    
+                    if(grid.getValidAdjacentLocations(testLocation).size() == 3)// if the test location has 3 neighbors
+                    {
+                         newOccupied.add(testLocation);//add the test location to the newOccupied locations
+                    }
                 }
             }
         }                                                                                                                                                    
         
-        // iterates through the valid test locations as they are the only ones that could be occupied next round, this optimization has a much greater effect the larger a grid becomes
-       
-        for(int i = 0; i<allNeighbors.size;i++)
-        {
-            
-        }
-        
-        
-        
+        Rock rock = new Rock();
+        // iterates through the valid test locations as they are the only ones that could be CHANGED next round, this optimization has a much greater effect the larger a grid become
         for(int j = 0; j<testSquares.size(); j++) 
         {
-            
+            Location loc = testSquares.get(j);
+            if(newOccupied.contains(loc))
+            {
+                grid.put(loc,rock);
+            }
+            else
+            {
+                grid.remove(loc);
+            }
         }
         
         
@@ -158,24 +169,7 @@ public class GameOfLife
         return actor;
     }
     
-    /**
-     * An example of a method - replace this comment with your own
-     *  that describes the operation of the method
-     *
-     * @pre     preconditions for the method
-     *          (what the method assumes about the method's parameters and class's state)
-     * @post    postconditions for the method
-     *          (what the method guarantees upon completion)
-     * @param   y   description of parameter y
-     * @return  description of the return value
-     */
-    public int numNeighbors(Location coord)
-    {
-        
-    }
-
-
-    /**
+       /**
      * Returns the number of rows in the game board
      *
      * @return    the number of rows in the game board
